@@ -38,7 +38,7 @@ public class RecognizerTest extends TestCase {
         expected.put(2, Arrays.asList("10", "01"));
         expected.put(3, Arrays.asList("101"));
 
-        assertEquals(expected, Recognizer.GetMap(input));
+        assertEquals(expected, Recognizer.getMap(input));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class RecognizerTest extends TestCase {
         expected.get(1).put("1", 1);
         expected.get(2).put("1", 1);
 
-        assertEquals(expected, Recognizer.CountRedundancies(input));
+        assertEquals(expected, Recognizer.countRedundancies(input));
     }
 
     @Test
@@ -70,9 +70,9 @@ public class RecognizerTest extends TestCase {
         List<HashMap<Integer, HashMap<String, Integer>>> expected = new ArrayList<HashMap<Integer, HashMap<String, Integer>>>();
 
         for (int i = 1; i <= input.keySet().size(); i++) {
-            expected.add(Recognizer.CountRedundancies(input.get(i)));
+            expected.add(Recognizer.countRedundancies(input.get(i)));
         }
 
-        assertEquals(expected, Recognizer.CountRedundancies(input));
+        assertEquals(expected, Recognizer.countRedundancies(input));
     }
 }

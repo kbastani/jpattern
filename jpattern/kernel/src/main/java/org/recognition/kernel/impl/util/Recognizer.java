@@ -3,7 +3,6 @@ package org.recognition.kernel.impl.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 /**
  * This class is a utility class that performs low-level pattern recognition in a sequence of characters
@@ -12,26 +11,23 @@ public class Recognizer {
 
     /**
      * This method is a helper method to print all the patterns of a symbol sequence */
-    public static void PrintRedundancyMatrix(String pattern)
+    public static void printRedundancyMatrix(String pattern)
     {
-        List<HashMap<Integer, HashMap<String, Integer>>> redundancyMatrix = CountRedundancies(GetMap(Parse(pattern)));
+        List<HashMap<Integer, HashMap<String, Integer>>> redundancyMatrix = countRedundancies(getMap(Parse(pattern)));
 
         for (int i = 0; i < redundancyMatrix.size(); i++) {
             HashMap<Integer, HashMap<String, Integer>> redundancyList = redundancyMatrix.get(i);
             System.out.println();
-            redundancyList.forEach(new BiConsumer<Integer, HashMap<String, Integer>>() {
-                @Override
-                public void accept(Integer integer, HashMap<String, Integer> stringIntegerHashMap) {
-                    System.out.print(stringIntegerHashMap);
-                }
+            redundancyList.forEach((value, map) -> {
+                    System.out.print(map);
             });
         }
     }
 
     // Find the features from a string and generate a redundancy matrix, scans maximum 8 symbol window
-    public static List<HashMap<Integer, HashMap<String, Integer>>> FindFeatures(String pattern)
+    public static List<HashMap<Integer, HashMap<String, Integer>>> findFeatures(String pattern)
     {
-        return CountRedundancies(GetMap(Parse(pattern)));
+        return countRedundancies(getMap(Parse(pattern)));
     }
 
     public static List<String> Parse(String pattern)
@@ -54,7 +50,7 @@ public class Recognizer {
         return stringList;
     }
 
-    public static HashMap<Integer, List<String>> GetMap(List<String> stringList) {
+    public static HashMap<Integer, List<String>> getMap(List<String> stringList) {
         HashMap<Integer, List<String>> stringMap = new HashMap<Integer, List<String>>();
 
         // Iterate through list
@@ -71,7 +67,7 @@ public class Recognizer {
         return  stringMap;
     }
 
-    public static HashMap<Integer, HashMap<String, Integer>> CountRedundancies(List<String> stringList)
+    public static HashMap<Integer, HashMap<String, Integer>> countRedundancies(List<String> stringList)
     {
         HashMap<Integer, HashMap<String, Integer>> countMatrix = new HashMap<Integer, HashMap<String, Integer>>();
 
@@ -98,11 +94,11 @@ public class Recognizer {
         return countMatrix;
     }
 
-    public static List<HashMap<Integer, HashMap<String, Integer>>> CountRedundancies(HashMap<Integer, List<String>> stringMap) {
+    public static List<HashMap<Integer, HashMap<String, Integer>>> countRedundancies(HashMap<Integer, List<String>> stringMap) {
         List<HashMap<Integer, HashMap<String, Integer>>> redundancyMatrix = new ArrayList<HashMap<Integer, HashMap<String, Integer>>>();
 
         for (int i = 1; i <= stringMap.keySet().size(); i++) {
-            redundancyMatrix.add(CountRedundancies(stringMap.get(i)));
+            redundancyMatrix.add(countRedundancies(stringMap.get(i)));
         }
         return redundancyMatrix;
     }
